@@ -359,6 +359,7 @@
     //! Récuperation des éléments du DOM
     const DOM = {
         btnNextDay: document.getElementById('btn-next-day'),
+        btnDisplayList: document.getElementById('btn-list'),
         displayEvent: document.getElementById('display-event'),
         displayAnimaux: document.getElementById('display-animal-list'),
         formAddAnimal: document.getElementById('animal-form'),
@@ -413,6 +414,47 @@
 
         // Reset du formulaire
         DOM.formAddAnimal.reset();
+    });
+
+    //? Afficher la liste des animaux
+    function createAnimalElement(animal) {
+        const listItem = document.createElement('li');
+
+        const itemInfo = document.createElement('p');
+        itemInfo.textContent = `${animal.nom} [${animal.sexe} / ${animal.age} ans]`;
+        const itemDesc = document.createElement('p');
+        itemDesc.textContent = `Poids : ${animal.poids} / Taille : ${animal.taille}`;
+        listItem.append(itemInfo, itemDesc);
+
+        if(animal instanceof Chat) {
+            const infoChat = document.createElement('p');
+            infoChat.textContent = `${animal.caractere} avec des poils ${animal.poilLong ? 'long' : 'court'}`;
+            listItem.append(infoChat);
+        }
+        if(animal instanceof Chien) {
+            const infoChien1 = document.createElement('p');
+            infoChien1.textContent = `${animal.race} avec un collier ${animal.couleurCollier}`;
+            const infoChien2 = document.createElement('p');
+            infoChien2.textContent = `Est dressé : ${animal.estDresse ? 'oui' : 'non'}`;
+            listItem.append(infoChien1, infoChien2);
+        }
+        if(animal instanceof Oiseau) {
+            const infoOiseau = document.createElement('p');
+            infoOiseau.textContent = `Couleur : ${animal.couleur} / Habitat : ${animal.habitat}`;
+            listItem.append(infoOiseau);
+        }
+
+        return listItem;
+    }
+
+    DOM.btnDisplayList.addEventListener('click', () => {
+        // Effacer la liste actuel
+        DOM.displayAnimaux.innerHTML = '';
+
+        // Ajouter les animaux de l'animalerie
+        for(const animal of animalerie.animaux.filter(a => a.estVivant)) {
+            DOM.displayAnimaux.append(createAnimalElement(animal));
+        } 
     });
 
 })();
