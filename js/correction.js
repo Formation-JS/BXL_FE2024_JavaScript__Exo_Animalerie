@@ -106,6 +106,13 @@
                 this.#estVivant = false;
             }
         }
+
+        toString() {
+            return `${this.nom} [${this.sexe}]`
+                + `\nAge : ${this.age} ans (Equivalent à ${this.ageHumain} ans)`
+                + `\nTaille : ${this.taille}`
+                + `\nPoids : ${this.poids}`;
+        }
     }
 
     class Chat extends Animal {
@@ -165,6 +172,13 @@
         crier() {
             return "Miaou !";
         }
+
+        toString() {
+            return super.toString()
+                + `\nCaractere : ${this.caractere}`
+                + `\nPoils long  : ${this.poilLong ? 'Oui' : 'Non'}`
+                + `\nGriffre coupé : ${this.griffeCoupe ? 'Oui' : 'Non'}`;
+        }
     }
 
     class Chien extends Animal {
@@ -223,6 +237,13 @@
         crier() {
             return "Wouf !";
         }
+
+        toString() {
+            return super.toString()
+                + `\nRace : ${this.race}`
+                + `\nCouleur collier  : ${this.couleurCollier}`
+                + `\nDresser : ${this.estDresse ? 'Oui' : 'Non'}`;
+        }
     }
 
     class Oiseau extends Animal {
@@ -272,6 +293,12 @@
             const chant = "Cui cui! ";
             const nbChant = Math.ceil(Math.random() * 5);
             return chant.repeat(nbChant);
+        }
+
+        toString() {
+            return super.toString()
+                + `\nCouleur : ${this.couleur}`
+                + `\nHabitat  : ${this.habitat}`;
         }
     }
 
