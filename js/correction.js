@@ -1,17 +1,20 @@
 'use strict';
 
-//! Définition des classes
-class Animal {
+//? Closure pour isoler le code
+(() => {
 
-    // Propriétés
-    #nom;
-    #poids;
-    #taille;
-    #sexe;
-    #age;
-    #dateArrive;
-    #probaMort;
-    #estVivant;
+    //! Définition des classes
+    class Animal {
+
+        // Propriétés
+        #nom;
+        #poids;
+        #taille;
+        #sexe;
+        #age;
+        #dateArrive;
+        #probaMort;
+        #estVivant;
 
         /**
          * Constructeur de la classe "Animal"
@@ -69,9 +72,9 @@ class Animal {
             this.#age = value;
         }
 
-    get ageHumain() {
-        throw new Error('Not implemented');
-    }
+        get ageHumain() {
+            throw new Error('Not implemented');
+        }
 
         get dateArrive() {
             return this.#dateArrive;
@@ -85,32 +88,32 @@ class Animal {
         }
         //#endregion
 
-    // Méthodes
-    /**
-     * @return {string} Le crie de l'animal 
-     */
-    crier() {
-        throw new Error('Not implemented');
-    }
-
-    passerNuit() {
-        if (!this.#estVivant) {
-            throw new Error(this.nom + ' est mort');
+        // Méthodes
+        /**
+         * @return {string} Le crie de l'animal 
+         */
+        crier() {
+            throw new Error('Not implemented');
         }
 
-        const rng = (Math.floor(Math.random * 1000)) / 10;
-        if (rng < this.#probaMort) {
-            this.#estVivant = false;
+        passerNuit() {
+            if (!this.#estVivant) {
+                throw new Error(this.nom + ' est mort');
+            }
+
+            const rng = (Math.floor(Math.random * 1000)) / 10;
+            if (rng < this.#probaMort) {
+                this.#estVivant = false;
+            }
         }
     }
-}
 
-class Chat extends Animal {
+    class Chat extends Animal {
 
-    // Propriétés
-    #caractere;
-    #poilLong;
-    #griffeCoupe;
+        // Propriétés
+        #caractere;
+        #poilLong;
+        #griffeCoupe;
 
         /**
          * Constructeur de la classe "Chat"
@@ -126,15 +129,15 @@ class Chat extends Animal {
         constructor(nom, poids, taille, sexe, age, caractere, poilLong, griffeCoupe) {
             super(nom, poids, taille, sexe, age, 0.5);
 
-        this.caractere = caractere;
-        this.#poilLong = poilLong;
-        this.#griffeCoupe = griffeCoupe;
-    }
+            this.caractere = caractere;
+            this.#poilLong = poilLong;
+            this.#griffeCoupe = griffeCoupe;
+        }
 
-    //#region Encapsulation
-    get ageHumain() {
-        return this.age * 4.2;
-    }
+        //#region Encapsulation
+        get ageHumain() {
+            return this.age * 4.2;
+        }
 
         get caractere() {
             return this.#caractere;
@@ -158,18 +161,18 @@ class Chat extends Animal {
         }
         //#endregion
 
-    // Méthodes
-    crier() {
-        return "Miaou !";
+        // Méthodes
+        crier() {
+            return "Miaou !";
+        }
     }
-}
 
-class Chien extends Animal {
+    class Chien extends Animal {
 
-    //Propriétés
-    #couleurCollier;
-    #race;
-    #estDresse;
+        //Propriétés
+        #couleurCollier;
+        #race;
+        #estDresse;
 
         /**
          * Constructeur de la classe "Chien"
@@ -189,10 +192,10 @@ class Chien extends Animal {
             this.#estDresse = estDresse;
         }
 
-    //#region Encapsulation
-    get ageHumain() {
-        return this.age * 7;
-    }
+        //#region Encapsulation
+        get ageHumain() {
+            return this.age * 7;
+        }
 
         get couleurCollier() {
             return this.#couleurCollier;
@@ -216,17 +219,17 @@ class Chien extends Animal {
         }
         //#endregion
 
-    // Méthodes
-    crier() {
-        return "Wouf !";
+        // Méthodes
+        crier() {
+            return "Wouf !";
+        }
     }
-}
 
-class Oiseau extends Animal {
+    class Oiseau extends Animal {
 
-    //Propriétés
-    #couleur;
-    #habitat;
+        //Propriétés
+        #couleur;
+        #habitat;
 
         /**
          * Constructeur de la classe "Oiseau"
@@ -244,10 +247,10 @@ class Oiseau extends Animal {
             this.#habitat = habitat;
         }
 
-    //#region Encapsulation
-    get ageHumain() {
-        return this.age * 11.1;
-    }
+        //#region Encapsulation
+        get ageHumain() {
+            return this.age * 11.1;
+        }
 
         get couleur() {
             return this.#couleur;
@@ -264,100 +267,101 @@ class Oiseau extends Animal {
         }
         //#endregion
 
-    // Méthodes
-    crier() {
-        const chant = "Cui cui! ";
-        const nbChant = Math.ceil(Math.random() * 5);
-        return chant.repeat(nbChant);
-    }
-}
-
-class Animalerie {
-
-    //! Propriétés
-    /** Liste des animaux @type {Animal[]} */
-    #animaux;
-    /** Date du jour à l'animalerie @type {Date} */
-    #today;
-
-    /**
-     * Constructeur de la classe "Animalerie"
-     */
-    constructor() {
-        this.#animaux = [];
-        this.#today = new Date(2025, 0, 1);
-    }
-
-    //#region Encapsulation
-    get animaux() {
-        return [...this.#animaux];
-    }
-
-    get today() {
-        return new Date(this.#today);
-    }
-    //#endregion
-
-    //! Méthodes
-
-    /**
-     * Méthode pour ajouter un animal à l'animalerie
-     * @param {Chat|Chien|Oiseau} animal 
-     */
-    ajouterAnimal(animal) {
-        if (!animal.estVivant) {
-            throw new Error('L\'animal est mouru !');
+        // Méthodes
+        crier() {
+            const chant = "Cui cui! ";
+            const nbChant = Math.ceil(Math.random() * 5);
+            return chant.repeat(nbChant);
         }
+    }
+
+    class Animalerie {
+
+        //! Propriétés
+        /** Liste des animaux @type {Animal[]} */
+        #animaux;
+        /** Date du jour à l'animalerie @type {Date} */
+        #today;
+
+        /**
+         * Constructeur de la classe "Animalerie"
+         */
+        constructor() {
+            this.#animaux = [];
+            this.#today = new Date(2025, 0, 1);
+        }
+
+        //#region Encapsulation
+        get animaux() {
+            return [...this.#animaux];
+        }
+
+        get today() {
+            return new Date(this.#today);
+        }
+        //#endregion
+
+        //! Méthodes
+
+        /**
+         * Méthode pour ajouter un animal à l'animalerie
+         * @param {Chat|Chien|Oiseau} animal 
+         */
+        ajouterAnimal(animal) {
+            if (!animal.estVivant) {
+                throw new Error('L\'animal est mouru !');
+            }
 
             animal.dateArrive = this.today;
             this.#animaux.push(animal);
         }
 
-    /**
-     * Méthode pour passer la nuit
-     */
-    passerNuit() {
-        // Avancer la date
-        this.#today.setDate(this.#today.getDate() + 1);
+        /**
+         * Méthode pour passer la nuit
+         */
+        passerNuit() {
+            // Avancer la date
+            this.#today.setDate(this.#today.getDate() + 1);
 
-        // Test de survie des animaux
-        for (const animal of this.#animaux.filter(a => a.estVivant)) {
-            animal.passerNuit();
-        }
-    }
-
-    /**
-     * Méthode pour obtenir le nombre d'animaux
-     * @returns {{chat: number,chien: number,oiseau: number }}
-     */
-    obtenirNombreAnimaux() {
-        const nbAnimaux = {
-            chat: 0,
-            chien: 0,
-            oiseau: 0
-        };
-
-        for (const animal of this.#animaux.filter(a => a.estVivant)) {
-            if (animal instanceof Chat) {
-                nbAnimaux.chat++;
-            }
-            else if (animal instanceof Chien) {
-                nbAnimaux.chien++;
-            }
-            else if (animal instanceof Oiseau) {
-                nbAnimaux.oiseau++;
+            // Test de survie des animaux
+            for (const animal of this.#animaux.filter(a => a.estVivant)) {
+                animal.passerNuit();
             }
         }
 
-        return nbAnimaux;
+        /**
+         * Méthode pour obtenir le nombre d'animaux
+         * @returns {{chat: number,chien: number,oiseau: number }}
+         */
+        obtenirNombreAnimaux() {
+            const nbAnimaux = {
+                chat: 0,
+                chien: 0,
+                oiseau: 0
+            };
+
+            for (const animal of this.#animaux.filter(a => a.estVivant)) {
+                if (animal instanceof Chat) {
+                    nbAnimaux.chat++;
+                }
+                else if (animal instanceof Chien) {
+                    nbAnimaux.chien++;
+                }
+                else if (animal instanceof Oiseau) {
+                    nbAnimaux.oiseau++;
+                }
+            }
+
+            return nbAnimaux;
+        }
     }
-}
 
-//! Récuperation des éléments du DOM
-const DOM = {
-    btnNextDay: document.getElementById('btn-next-day'),
-    displayEvent: document.getElementById('display-event'),
-    displayAnimaux: document.getElementById('display-animal-list'),
-    formAddAnimal: document.getElementById('animal-form'),
-};
+    //! Récuperation des éléments du DOM
+    const DOM = {
+        btnNextDay: document.getElementById('btn-next-day'),
+        displayEvent: document.getElementById('display-event'),
+        displayAnimaux: document.getElementById('display-animal-list'),
+        formAddAnimal: document.getElementById('animal-form'),
+    };
 
+})();
