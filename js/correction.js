@@ -360,6 +360,7 @@
     const DOM = {
         btnNextDay: document.getElementById('btn-next-day'),
         btnDisplayList: document.getElementById('btn-list'),
+        displayResume: document.getElementById('display-resume'),
         displayEvent: document.getElementById('display-event'),
         displayAnimaux: document.getElementById('display-animal-list'),
         formAddAnimal: document.getElementById('animal-form'),
@@ -367,6 +368,24 @@
 
     //! Application
     const animalerie = new Animalerie();
+
+    function refreshResume() {
+        DOM.displayResume.innerHTML = '';
+        const animalStats = animalerie.obtenirNombreAnimaux();
+
+        const infoJour = document.createElement('p');
+        infoJour.textContent = `Nous sommes le ${animalerie.today.toLocaleDateString()}`;
+
+        const nbChat = document.createElement('p');
+        nbChat.textContent = `Nombre de chat : ${animalStats.chat}`;
+        const nbChien = document.createElement('p');
+        nbChien.textContent = `Nombre de chien : ${animalStats.chien}`;
+        const nbOiseau = document.createElement('p');
+        nbOiseau.textContent = `Nombre d'oiseau : ${animalStats.oiseau}`;
+
+        DOM.displayResume.append(infoJour, nbChat, nbChien, nbOiseau);
+    }
+    refreshResume();
 
     //? Traitement du formulaire
     DOM.formAddAnimal.addEventListener('submit', (e) => {
@@ -426,19 +445,19 @@
         itemDesc.textContent = `Poids : ${animal.poids} / Taille : ${animal.taille}`;
         listItem.append(itemInfo, itemDesc);
 
-        if(animal instanceof Chat) {
+        if (animal instanceof Chat) {
             const infoChat = document.createElement('p');
             infoChat.textContent = `${animal.caractere} avec des poils ${animal.poilLong ? 'long' : 'court'}`;
             listItem.append(infoChat);
         }
-        if(animal instanceof Chien) {
+        if (animal instanceof Chien) {
             const infoChien1 = document.createElement('p');
             infoChien1.textContent = `${animal.race} avec un collier ${animal.couleurCollier}`;
             const infoChien2 = document.createElement('p');
             infoChien2.textContent = `Est dressé : ${animal.estDresse ? 'oui' : 'non'}`;
             listItem.append(infoChien1, infoChien2);
         }
-        if(animal instanceof Oiseau) {
+        if (animal instanceof Oiseau) {
             const infoOiseau = document.createElement('p');
             infoOiseau.textContent = `Couleur : ${animal.couleur} / Habitat : ${animal.habitat}`;
             listItem.append(infoOiseau);
@@ -452,9 +471,15 @@
         DOM.displayAnimaux.innerHTML = '';
 
         // Ajouter les animaux de l'animalerie
-        for(const animal of animalerie.animaux.filter(a => a.estVivant)) {
+        for (const animal of animalerie.animaux.filter(a => a.estVivant)) {
             DOM.displayAnimaux.append(createAnimalElement(animal));
-        } 
+        }
+    });
+
+    //? Simulation de l'animalerie
+    DOM.btnNextDay.addEventListener('click', () => {
+        animalerie.passerNuit();
+        refreshResume();
     });
 
 })();
