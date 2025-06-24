@@ -16,6 +16,18 @@
         #probaMort;
         #estVivant;
 
+        //#region Events
+        #mortEvent;
+
+        setMortEventListener(callback) {
+            this.#mortEvent = callback;
+        }
+        #raiseMortEvent() {
+            if(!this.#mortEvent || typeof(this.#mortEvent) !== 'function') return;
+            this.#mortEvent(this);
+        }
+        //#endregion
+
         /**
          * Constructeur de la classe "Animal"
          * @param {string} nom 
@@ -104,6 +116,7 @@
             const rng = (Math.floor(Math.random() * 1000)) / 10;
             if (rng < this.#probaMort) {
                 this.#estVivant = false;
+                this.#raiseMortEvent();
             }
         }
 
@@ -310,6 +323,17 @@
         /** Date du jour à l'animalerie @type {Date} */
         #today;
 
+        //#region Events
+        #infoEventListener;
+
+        setInfoEventListener(callback) {
+            this.#infoEventListener = callback;
+        }
+        #raiseInfoEvent(message) {
+            this.#infoEventListener(message);
+        }
+        //#endregion
+
         /**
          * Constructeur de la classe "Animalerie"
          */
@@ -341,6 +365,11 @@
 
             animal.dateArrive = this.today;
             this.#animaux.push(animal);
+
+            animal.setMortEventListener((a) => {
+                this.#raiseInfoEvent(`${this.today.toLocaleDateString()} : ${a.nom} est mouru!`);
+            });
+            this.#raiseInfoEvent(`${this.today.toLocaleDateString()} : ${animal.nom} est arrivé dans l'animalerie.`);
         }
 
         /**
@@ -413,6 +442,12 @@
         DOM.displayResume.append(infoJour, nbChat, nbChien, nbOiseau);
     }
     refreshResume();
+
+    animalerie.setInfoEventListener((message) => {
+        const notif = document.createElement('p');
+        notif.textContent = message;
+        DOM.displayEvent.append(notif);
+    })
 
     //? Traitement du formulaire
     DOM.formAddAnimal.addEventListener('submit', (e) => {
