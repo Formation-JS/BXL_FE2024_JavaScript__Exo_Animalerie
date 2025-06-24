@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animalerie</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/interaction-dom.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Animalerie</h1>
+        <nav>
+            <a id="btn-dashboard">Dashboard</a>
+            <a id="btn-list">Afficher la liste</a>
+            <a id="btn-form">Formulaire d'ajout</a>
+        </nav>
+    </header>
+    <main>
+        <div id="view-dashboard">
+            <h2>Dashboard</h2>
+            <button id="btn-next-day">Passer à la journée suivante</button>
+            <div id="display-event"></div>
+        </div>
+        <div id="view-list">
+            <h2>Liste des animaux</h2>
+            <ul id="display-animal-list"></ul>
+        </div>
+        <div id="view-form">
+            <h2>Ajouter un animal</h2>
+            <form id="animal-form">
+                <fieldset id="animal-field-general">
+                    <div>
+                        <label for="input-animal-type">Type d'animal</label>
+                        <select name="animal-type" id="input-animal-type" required>
+                            <option value="" selected disabled>Veuillez sectionner une valeur</option>
+                            <option value="Chat">Chat</option>
+                            <option value="Chien">Chien</option>
+                            <option value="Oiseau">Oiseau</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="input-name">Nom</label>
+                        <input id="input-name" name="name" type="text" required>
+                    </div>
+                    <div>
+                        <label for="input-poids">Poids</label>
+                        <input id="input-poids" name="poids" type="number" required>
+                    </div>
+                    <div>
+                        <label for="input-taille">Taille</label>
+                        <input id="input-taille" name="taille" type="text" required>
+                    </div>
+                    <div>
+                        <label for="input-sexe">Sexe</label>
+                        <input id="input-sexe" name="sexe" type="text" required>
+                    </div>
+                    <div>
+                        <label for="input-age">Age</label>
+                        <input id="input-age" name="age" type="text" required>
+                    </div>
+                </fieldset>
+                <form id="animal-form">
+                    <fieldset id="animal-field-chat" class="animal-field" disabled>
+                        <div>
+                            <label for="input-chat-caractere">Caractère</label>
+                            <input id="input-chat-caractere" name="chat-caractere" type="text" required>
+                        </div>
+                        <div>
+                            <label for="input-chat-poids">Poils long</label>
+                            <input id="input-chat-poids" name="chat-poids" type="checkbox">
+                        </div>
+                        <div>
+                            <label for="input-chat-griffe">Griffe coupé</label>
+                            <input id="input-chat-griffe" name="chat-griffe" type="checkbox">
+                        </div>
+                    </fieldset>
+                    <fieldset id="animal-field-chien" class="animal-field" disabled>
+                        <div>
+                            <label for="input-chien-race">Race</label>
+                            <input id="input-chien-race" name="chien-race" type="text" required>
+                        </div>
+                        <div>
+                            <label for="input-chien-collier">Couleur de collier</label>
+                            <input id="input-chien-collier" name="chien-collier" type="text" required>
+                        </div>
+                        <div>
+                            <label for="input-chien-dresse">Dressé</label>
+                            <input id="input-chien-dresse" name="chien-dresse" type="checkbox">
+                        </div>
+                    </fieldset>
+                    <fieldset id="animal-field-oiseau" class="animal-field" disabled>
+                        <div>
+                            <label for="input-oiseau-couleur">Couleur</label>
+                            <input id="input-oiseau-couleur" name="oiseau-couleur" type="text" required>
+                        </div>
+                        <div>
+                            <label for="input-oiseau-habitat">Habitat</label>
+                            <select id="input-oiseau-habitat" name="oiseau-habitat" required>
+                                <option value="Cage">Cage</option>
+                                <option value="Volière">Volière</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <div>
+                        <button type="submit">Ajouter</button>
+                        <button type="reset">Effacer</button>
+                    </div>
+                </form>
+        </div>
+    </main>
+</body>
+
+</html>

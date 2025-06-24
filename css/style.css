@@ -1,0 +1,111 @@
+/* Utils */
+.hidden {
+    display: none !important;
+}
+
+/* Variable */
+:root {
+    --primary-color: crimson;
+    --primary-color-alt: hotpink;
+    --primary-color-text: aliceblue;
+    --secondary-color: lightskyblue;
+}
+
+/* Global */
+* {
+    box-sizing: border-box;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+    border: 0;
+    border-radius: 0.5ch;
+    padding: 0.3ch 1ch;
+
+    &:active {
+        background-color: var(--primary-color-alt);
+    }
+}
+
+body {
+    color: var(--primary-color);
+    min-height: 100vh;
+
+    background: url(/images/wallpaper.avif);
+
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1em;
+    padding: 0.5em;
+
+    h1 {
+        margin: 0;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: row;
+        gap: 1.5ch;
+        font-size: 1em;
+
+        a {
+            cursor: pointer;
+        }
+    }
+}
+
+main {
+    width: 90%;
+    margin: 0 auto;
+    padding: 0 1ch;
+    flex-grow: 1;
+
+    background: var(--secondary-color)
+                no-repeat right bottom / 12em url(/images/stitch.png);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5ch;
+
+    fieldset {
+        border: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5ch;
+    }
+
+    div:has(>label) {
+        display: flex;
+        flex-direction: row;
+
+        label {
+            flex-basis: 13ch;
+        }
+
+        input,
+        select,
+        textarea {
+            flex-grow: 1;
+            padding: 0.5ch;
+
+            &[type=checkbox] {
+                flex-grow: 0;
+                align-self: stretch;
+                width: 1em;
+            }
+        }
+    }
+}
