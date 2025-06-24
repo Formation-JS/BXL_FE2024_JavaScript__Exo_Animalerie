@@ -101,7 +101,7 @@
                 throw new Error(this.nom + ' est mort');
             }
 
-            const rng = (Math.floor(Math.random * 1000)) / 10;
+            const rng = (Math.floor(Math.random() * 1000)) / 10;
             if (rng < this.#probaMort) {
                 this.#estVivant = false;
             }
