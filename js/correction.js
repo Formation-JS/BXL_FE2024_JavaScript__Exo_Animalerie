@@ -364,4 +364,55 @@
         formAddAnimal: document.getElementById('animal-form'),
     };
 
+    //! Application
+    const animalerie = new Animalerie();
+
+    //? Traitement du formulaire
+    DOM.formAddAnimal.addEventListener('submit', (e) => {
+        // Annulation de l'event "submit"
+        e.preventDefault();
+
+        // Récuperation du type d'animal à créer
+        const animalSelected = DOM.formAddAnimal['animal-type'].value;
+
+        // Récuperation des éléments commun
+        const nom = DOM.formAddAnimal['nom'].value;
+        const poids = DOM.formAddAnimal['poids'].valueAsNumber;
+        const taille = DOM.formAddAnimal['taille'].value;
+        const sexe = DOM.formAddAnimal['sexe'].value;
+        const age = DOM.formAddAnimal['age'].valueAsNumber;
+
+        // Création de l'animal
+        let animal = null;
+        if (animalSelected === 'Chat') {
+            const caractere = DOM.formAddAnimal['chat-caractere'].value;
+            const poilLong = DOM.formAddAnimal['chat-poils'].checked;
+            const griffreCoupe = DOM.formAddAnimal['chat-griffe'].checked;
+
+            animal = new Chat(nom, poids, taille, sexe, age, caractere, poilLong, griffreCoupe);
+        }
+        else if (animalSelected === 'Chien') {
+            const collier = DOM.formAddAnimal['chien-collier'].value;
+            const race = DOM.formAddAnimal['chien-race'].value;
+            const estDresse = DOM.formAddAnimal['chien-dresse'].checked;
+
+            animal = new Chien(nom, poids, taille, sexe, age, collier, race, estDresse);
+        }
+        else if (animalSelected === 'Oiseau') {
+            const couleur = DOM.formAddAnimal['oiseau-couleur'].value;
+            const habitat = DOM.formAddAnimal['oiseau-habitat'].value;
+
+            animal = new Oiseau(nom, poids, taille, sexe, age, couleur, habitat);
+        }
+        else {
+            throw new Error('Animal not supported');
+        }
+
+        // Ajout de l'animal dans l'animalerie
+        animalerie.ajouterAnimal(animal);
+
+        // Reset du formulaire
+        DOM.formAddAnimal.reset();
+    });
+
 })();
